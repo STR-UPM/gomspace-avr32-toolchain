@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
     libgmp-dev
 
 # Build and Install old version of texinfo
-RUN wget http://ftp.gnu.org/gnu/texinfo/texinfo-4.13.tar.gz && tar xf texinfo-4.13.tar.gz && cd texinfo-4.13 && ./configure && make && make install
+RUN wget http://ftp.gnu.org/gnu/texinfo/texinfo-4.13.tar.gz && tar xf texinfo-4.13.tar.gz && cd texinfo-4.13 && ./configure --build=arm-linux && make && make install
 
 
 # NOTE for Ubuntu 2022: The last line from the Dockerfile is commented

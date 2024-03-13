@@ -42,7 +42,7 @@ clone_tool () {
 clone_tool origin binutils git@github.com:GomSpace/avr32-binutils-gdb.git
 clone_tool origin gcc      git@github.com:GomSpace/avr32-gcc.git
 clone_tool origin newlib   git@github.com:GomSpace/avr32-newlib.git
-cp -rd binutils gdb
+cp -r binutils gdb
 
 # We perhaps ought to allow an option to check out specific versions. For now
 # just messages.

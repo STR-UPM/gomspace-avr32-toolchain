@@ -56,7 +56,7 @@
 # --install-dir <install_dir>
 
 #     The directory in which the tool chain should be installed. Default
-#     /usr/local/avr32-gnu-toolchain-linux_x86_64.
+#     /usr/local/avr32-gnu-toolchain-linux_aarch64.
 
 # --symlink-dir <symlink_dir>
 
@@ -139,7 +139,7 @@ bd_gcc=${builddir}/gcc
 bd_newlib=${builddir}/newlib
 bd_gdb=${builddir}/gdb
 logdir="${rootdir}/logs-${VERSION}"
-installdir="/usr/local/avr32-gnu-toolchain-linux_x86_64"
+installdir="/usr/local/avr32-gnu-toolchain-linux_aarch64"
 autocheckout="--auto-checkout"
 autopull="--no-auto-pull"
 make_load="`(echo processor; cat /proc/cpuinfo 2>/dev/null) \
@@ -288,7 +288,7 @@ mkdir -p "${bd_binutils}"
 cd "${bd_binutils}"
 
 # Configure the build
-if "${rootdir}/binutils"/configure --target=avr32 \
+if "${rootdir}/binutils"/configure --build=arm-linux --target=avr32 \
         --disable-nls --disable-werror \
         --with-pkgversion="AVR32 toolchain ${VERSION} (built $(date +%Y%m%d))" \
         --with-bugurl="http://www.atmel.com/avr" \
@@ -361,7 +361,7 @@ mkdir -p "${bd_gcc_bs}"
 cd "${bd_gcc_bs}"
 
 # Configure the build
-if CFLAGS='-fgnu89-inline' CXXFLAGS='-fgnu89-inline' "${rootdir}/gcc"/configure --target=avr32 \
+if CFLAGS='-fgnu89-inline' CXXFLAGS='-fgnu89-inline' "${rootdir}/gcc"/configure --build=arm-linux --target=avr32 \
         --disable-libssp --disable-shared \
         --disable-threads --disable-nls \
         --disable-libstdcxx-pch --without-headers \
@@ -424,7 +424,7 @@ mkdir -p "${bd_newlib}"
 cd "${bd_newlib}"
 
 # Configure the build
-if "${rootdir}/newlib"/configure --target=avr32 \
+if "${rootdir}/newlib"/configure --build=arm-linux --target=avr32 \
         --enable-newlib-io-long-long \
         --enable-newlib-io-long-double \
         --enable-newlib-io-pos-args \
@@ -488,7 +488,7 @@ mkdir -p "${bd_gcc}"
 cd "${bd_gcc}"
 
 # Configure the build
-if CFLAGS='-fgnu89-inline' CXXFLAGS='-fgnu89-inline' "${rootdir}/gcc"/configure --target=avr32 \
+if CFLAGS='-fgnu89-inline' CXXFLAGS='-fgnu89-inline' "${rootdir}/gcc"/configure --build=arm-linux --target=avr32 \
         --disable-libssp --disable-shared \
         --disable-threads --disable-nls \
         --disable-libstdcxx-pch --without-headers \
@@ -556,7 +556,7 @@ mkdir -p "${bd_gdb}"
 cd "${bd_gdb}"
 
 # Configure the build
-if "${rootdir}/gdb"/configure --target=avr32 \
+if "${rootdir}/gdb"/configure --build=arm-linux --target=avr32 \
         --disable-nls --disable-werror --with-python \
         --with-pkgversion="AVR32 toolchain ${VERSION} (built $(date +%Y%m%d))" \
         --with-bugurl="http://www.atmel.com/avr" \
@@ -606,7 +606,7 @@ fi
 # Create tarball 
 echo "Create tarball for install" >> "${logfile}"
 cd "${rootdir}"
-tar czf avr32-gnu-toolchain-${VERSION}.${PATCHLEVEL}-linux.any.x86_64.tar.gz -C /usr/local avr32-gnu-toolchain-linux_x86_64
+tar czf avr32-gnu-toolchain-${VERSION}.${PATCHLEVEL}-linux.any.aarch64.tar.gz -C /usr/local avr32-gnu-toolchain-linux_aarch64
 
 # Combine toolchain with headers, avr32 program and install script
 echo "Create combined installation package" >> "${logfile}"
@@ -615,7 +615,7 @@ tooldir="gs-avr32-toolchain-${VERSION}"
 rm -rf "${tooldir}"
 mkdir "${tooldir}"
 cp install_package/* "${tooldir}"
-cp "avr32-gnu-toolchain-${VERSION}.${PATCHLEVEL}-linux.any.x86_64.tar.gz" "${tooldir}"
+cp "avr32-gnu-toolchain-${VERSION}.${PATCHLEVEL}-linux.any.aarch64.tar.gz" "${tooldir}"
 sed -i "s/avr32-gnu-toolchain-3.4.2.435/avr32-gnu-toolchain-${VERSION}.${PATCHLEVEL}/" "${tooldir}/install-avr32.sh"
 tar czf "${tooldir}.tar.gz" "${tooldir}"
 
